@@ -1,0 +1,174 @@
+<?php 
+	require_once "role_manager.php";
+	$roleManager = new roleManager();
+	$roleManager->log_as_admin_or_not();
+	session_write_close();
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Accessible Map</title>
+
+	<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+	<script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script type="module" crossorigin src="assets/index-JPA8hSIm.js"></script>
+    <link rel="stylesheet" crossorigin href="assets/index-BM8pUXy-.css">
+    <style>
+      html,
+	body {
+		width: 100%;
+		height: 100%;
+		margin: 0;
+	}
+
+	#map {
+		width: 100%;
+		height: 100%;
+	}
+      a.skiplink {
+        position: absolute;
+        clip: rect(1px, 1px, 1px, 1px);
+        padding: 0;
+        border: 0;
+        height: 1px;
+        width: 1px;
+        overflow: hidden;
+      }
+      a.skiplink:focus {
+        clip: auto;
+        height: auto;
+        width: auto;
+        background-color: #fff;
+        padding: 0.3em;
+      }
+      #map:focus {
+        outline: #4A74A8 solid 0.15em;
+      }
+	  
+	  .blink {
+		animation: blink 2s infinite;
+	  }
+
+	  @keyframes blink {
+		0%, 50% {
+			opacity: 1;
+        }
+        50.01%, 100% {
+            opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skiplink" href="#map">Go to map</a>
+    <div id="map" class="map" tabindex="0"></div>
+	<div id="zone_list" class="card mb-4 shadow-sm" style="position: fixed;top: 90PX;width: 336PX;right: 8PX;TOP: 10PX;PADDING: 14PX;overflow-y: scroll;max-height: 747PX;"></div>
+	
+	<div class="modal fade" id="maModal" tabindex="-1">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+
+		  <div class="modal-header">
+			<h5 class="modal-title">Titre</h5>
+			<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+		  </div>	  
+		  <div id="modal-form"> 
+			  <form id="declare_form">
+				  <table>
+				    <tr>
+						<td>
+							<label for="zone_label">Zone Label :</label>
+						</td>
+						<td>
+							<input id="zone_label" name="name"/>
+						</td>
+				    </tr>
+				    <tr>
+						<td>
+							Describre your Highline Spot in few words :
+						</td>
+						<td>
+							<textarea id="zone_description" name="zone_description" rows="5" cols="33"></textarea>
+						</td>
+					</tr>
+					<tr>
+						<td> 
+							Please check the exact Max Altitude on <a href="https://www.geoportail.gouv.fr/carte">Geoportail</a> or other profesionnal map systeme and fill it here in FT/SEALEVEL.
+						</td>
+						<td>
+							<input type="number" id="max_altitude" name="max_altitude" min="5" max="8000" required />
+						</td>
+					<tr>
+						<td>
+							<label for="start_date_label">Fill the <b>start date</b> and hour :</label>
+
+						</td>
+						<td>
+							<input type="datetime-local" name="start_date" id="start_date" required>
+						</td>
+					
+					</tr>
+					<tr>
+						<td>
+							<label for="end_date_label">Fill the <b>end date</b> and hour :</label>
+
+						</td>
+						<td>
+							<input type="datetime-local" name="end_date" id="end_date" required>
+						</td>
+					
+					</tr>
+						<td>
+								<label for="filled_coords" id="filled_coords">Filled Coords</label>
+						</td>
+						<td>
+								<label for="coords_label" id="coords_label"></label>
+								<input type="hidden" id="coords" name="coords" value="" />
+						</td>
+					</tr>
+				   </table>
+				  
+				  
+				  <input type="submit" value="Envoyer !" />
+		  </form>
+		  </div>
+
+		  <div class="modal-footer">
+		  </div>
+
+		</div>
+	  </div>
+	</div>	
+	
+<script src="sync_status.js"></script>
+<script>
+	const modal = document.getElementById('maModal');
+
+	modal.addEventListener('show.bs.modal', function (event) {
+    // Le bouton qui a déclenché l'ouverture
+    const button = event.relatedTarget;
+
+    // Récupération des données
+    const id = button.dataset.id;
+    const nom = button.dataset.nom;
+
+    console.log(id, nom);
+
+    // Exemple : modifier le contenu de la modal
+    modal.querySelector('.modal-title').textContent = `Declare Highline(s) in ${nom}`;
+	
+	
+	console.log("id ===>"+id);
+	//Envoyer les coordonnées au champ du form et au label
+	document.getElementById("coords_label").textContent = JSON.stringify(allZones[id]);
+	document.getElementById("coords").value = JSON.stringify(allZones[id]);
+
+});
+
+
+</script>
+
+  </body>
+</html>

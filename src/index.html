@@ -1,0 +1,312 @@
+<html lang="en">
+<head>
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: white;
+    overflow:hidden;
+}
+
+#title_box{
+    position: relative;
+    top: -80px;
+}
+
+#big_title{
+    font-family:Arial, sans-serif;
+    font-size:70px;
+    color:#000;
+    letter-spacing:3px;
+}
+
+#big_title span{
+    display:inline-block;
+    opacity:0;
+}
+
+/* Arrive de la gauche */
+.left{
+    animation:slideLeft 0.8s ease-out forwards;
+}
+
+/* Arrive de la droite */
+.right{
+    animation:slideRight 0.8s ease-out forwards;
+}
+
+/* Délai entre les lettres */
+#big_title span:nth-child(1){animation-delay:0.0s;}
+#big_title span:nth-child(2){animation-delay:0.1s;}
+#big_title span:nth-child(3){animation-delay:0.2s;}
+#big_title span:nth-child(4){animation-delay:0.3s;}
+#big_title span:nth-child(5){animation-delay:0.4s;}
+#big_title span:nth-child(6){animation-delay:0.5s;}
+#big_title span:nth-child(7){animation-delay:0.6s;}
+#big_title span:nth-child(8){animation-delay:0.7s;}
+
+@keyframes slideLeft{
+    from{
+        transform:translateX(-250px);
+        opacity:0;
+    }
+    to{
+        transform:translateX(0);
+        opacity:1;
+    }
+}
+
+@keyframes slideRight{
+    from{
+        transform:translateX(250px);
+        opacity:0;
+    }
+    to{
+        transform:translateX(0);
+        opacity:1;
+    }
+}
+
+#subtitle_box {
+	position: absolute;
+    top: 43%;
+    COLOR: black;
+}
+
+#subtitle span,
+#subtitle img{
+    vertical-align:middle;
+    margin-left:7px;
+    display:inline-block;
+    opacity:0;
+    animation-duration:.8s;
+    animation-fill-mode:forwards;
+    animation-timing-function:ease-out;
+}
+
+#subtitle {
+	    font-size: 1.2em;
+		
+}
+
+#subtitle span:nth-child(1){animation-delay:.00s;}
+#subtitle span:nth-child(2){animation-delay:.03s;}
+#subtitle span:nth-child(3){animation-delay:.06s;}
+#subtitle span:nth-child(4){animation-delay:.09s;}
+#subtitle span:nth-child(5){animation-delay:.12s;}
+#subtitle span:nth-child(6){animation-delay:.15s;}
+/* etc... */
+
+.left{
+    animation-name:slideLeft;
+}
+
+.right{
+    animation-name:slideRight;
+}
+
+
+
+#subtitle_soft{
+font-family: Arial, Helvetica, sans-serif;
+        font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    text-align: center;
+    letter-spacing: 2px;
+    margin-top: 6px;
+    position: absolute;
+    left: 29%;
+}
+
+#subtitle_soft span{
+    display:inline-block;
+    opacity:0;
+}
+
+#subtitle span{
+    margin-right: -3px;
+}
+
+#login_btn{
+    opacity:0;
+    cursor:pointer;
+    color:white;
+    animation:loginFade 1s ease forwards;
+    animation-delay:2s;
+}
+
+@keyframes loginFade{
+    from{
+        opacity:0;
+    }
+    to{
+        opacity:1;
+    }
+}
+
+</style>
+
+<style>
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.65);
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+}
+
+.modal_content{
+	background: white;
+    width:340px;
+    border:1px solid #555;
+    border-radius:8px;
+    padding:25px;
+    box-shadow:0 0 20px rgba(0,0,0,.5);
+    position:relative;
+}
+
+.modal_content h2{
+    margin-top:0;
+    text-align:center;
+}
+
+.modal_content input{
+    width:100%;
+    box-sizing:border-box;
+    margin:10px 0;
+    padding:10px;
+    border:1px solid #555;
+    color:#000;
+    border-radius:4px;
+    font-size:15px;
+}
+
+.modal_content button{
+    width:100%;
+    margin-top:15px;
+    padding:10px;
+    border:none;
+    background:#2196F3;
+    color:white;
+    cursor:pointer;
+    border-radius:4px;
+    font-size:15px;
+}
+
+.modal_content button:hover{
+    background:#1976D2;
+}
+
+.close{
+    position:absolute;
+    top:10px;
+    right:15px;
+    font-size:24px;
+    cursor:pointer;
+}
+</style>
+</head>
+	<body>
+	<div id="title_box">
+	<h1 id="big_title">
+		<span class="left">S</span>
+		<span class="right">a</span>
+		<span class="left">f</span>
+		<span class="right">e</span>
+		<span>&nbsp;</span>
+		<span class="left">H</span>
+		<span class="right">i</span>
+		<span class="left">g</span>
+		<span class="right">h</span>
+	</h1>
+	</div>
+	<div id="subtitle_box">
+	<h2 id="subtitle">
+		<span class="left">H</span><span class="right">i</span><span class="left">g</span><span class="right">h</span><span class="left">l</span><span class="right">i</span><span class="left">n</span><span class="right">e</span><span>&nbsp;</span>
+
+		<span class="left">R</span><span class="right">e</span><span class="left">p</span><span class="right">o</span><span class="left">r</span><span class="right">t</span><span class="left">i</span><span class="right">n</span><span class="left">g</span><span>&nbsp;</span>
+
+		<span class="right">S</span><span class="left">y</span><span class="right">s</span><span class="left">t</span><span class="right">e</span><span class="left">m</span><span>&nbsp;</span>
+
+		<span class="right">p</span><span class="left">o</span><span class="right">w</span><span class="left">e</span><span class="right">r</span><span class="left">e</span><span class="right">d</span><span>&nbsp;</span>
+
+		<span class="left">b</span><span class="right">y</span><span>&nbsp;</span>
+
+		<span class="left">S</span><span class="right">a</span><span class="left">f</span><span class="right">e</span><span>&nbsp;</span>
+
+		<span class="left">S</span><span class="right">k</span><span class="left">y</span>
+
+		<img class="right" src="http://localhost/img/safe_sky_logo.png" width="34" style="vertical-align:middle;margin-left:8px;">
+	</h2>
+	
+	<h3 id="subtitle_soft">
+		<span class="left">M</span><span class="right">a</span><span class="left">r</span><span class="right">m</span><span class="left">o</span><span class="right">t</span><span class="left">t</span><span class="right">e</span><span>&nbsp;</span>
+
+		<span class="left">S</span><span class="right">o</span><span class="left">f</span><span class="right">t</span><span class="left">w</span><span class="right">a</span><span class="left">r</span><span class="right">e</span><span>&nbsp;</span>
+
+		<span class="left">S</span><span class="right">o</span><span class="left">l</span><span class="right">u</span><span class="left">t</span><span class="right">i</span><span class="left">o</span><span class="right">n</span><span class="left">s</span>
+	</h3>
+	</div>
+	
+	
+	<span id="login_btn" style="cursor:pointer;cursor: pointer;
+    position: relative;
+    top: 78PX;
+    left: -281PX;
+    COLOR: blue;">Login</span>
+	
+<div id="login_modal" class="modal">
+    <div class="modal_content">
+        <span class="close">&times;</span>
+
+        <h2>Login</h2>
+
+        <form method="POST" action="http://localhost/routing.php?route=login">
+
+            <input 
+                type="text" 
+                name="username" 
+                placeholder="Username"
+                required
+            >
+
+            <input 
+                type="password" 
+                name="password" 
+                placeholder="Password"
+                required
+            >
+
+            <button type="submit">
+                Sign in
+            </button>
+
+        </form>
+    </div>
+</div>
+	
+	<script>
+	const modal = document.getElementById("login_modal");
+
+	document.getElementById("login_btn").onclick = () => {
+		modal.style.display = "flex";
+	};
+
+	document.querySelector(".close").onclick = () => {
+		modal.style.display = "none";
+	};
+
+	window.onclick = (e) => {
+		if (e.target === modal) {
+			modal.style.display = "none";
+		}
+	};
+
+	</script>
+	</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "name": "accessible",
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "ol": "^10.9.0"
+  },
+  "devDependencies": {
+    "vite": "^8.1.0"
+  },
+  "scripts": {
+    "start": "vite",
+    "build": "vite build",
+    "dev": "vite"
+  },
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
