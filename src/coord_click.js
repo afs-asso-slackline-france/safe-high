@@ -82,6 +82,7 @@ const map = new Map({
 });
 */
 // Affiche les coordonnées GPS du clic
+/*
 map.on('click', function (event) {
 
     if (allZones.length == zoneCount) {
@@ -102,12 +103,71 @@ map.on('click', function (event) {
     }
 
 });
-
+*/
 // Outil de dessin de polygone
 const draw = new Draw({
   source: source,
   type: 'Polygon',
 });
+
+/*******************************/
+// Click on Map more Reliable //
+/*******************************/
+
+let lastPointCount = 0;
+let lastCoord = null;
+
+draw.on('drawstart', function (event) {
+
+    lastPointCount = 0;
+    lastCoord = null;
+
+    const sketch = event.feature;
+
+    sketch.getGeometry().on('change', function (evt) {
+
+        const coords = evt.target.getCoordinates()[0];
+
+        // On retire le point temporaire de la souris
+        const realPointCount = coords.length - 1;
+
+        if (realPointCount <= 0) {
+            return;
+        }
+
+        const coord = coords[realPointCount - 1];
+
+        if (
+            realPointCount > lastPointCount &&
+            (
+                lastCoord === null ||
+                JSON.stringify(coord) !== JSON.stringify(lastCoord)
+            )
+        ) {
+
+            const [lon, lat] = toLonLat(coord);
+
+			if (allZones.length == zoneCount) {
+				console.log("NOUVEAU POINT AJOUTÉ");
+
+				currentDots.push([
+					lat.toFixed(6),
+					lon.toFixed(6)
+				]);
+
+				console.log("Current Dots :", currentDots);
+			}
+
+            lastPointCount = realPointCount;
+            lastCoord = coord;
+        }
+
+    });
+
+});
+
+/*******************************/
+/*******************************/
 
 map.addInteraction(draw);
 
@@ -164,6 +224,7 @@ draw.on('drawend', function (event) {
 	
   } else {
 	  allZones.push(currentDots);
+	  add_zone_in_list();
 	  console.log("All Zones =>");
 	  console.log(allZones); 
 	  
@@ -252,7 +313,10 @@ async function sup_specific_zone(coords) {
 		});
 		
 	const data = await response.json();
-	alert(data);
+	
+	if (data !== "Nothing to do") {
+		alert(data);
+	}
 
 }
 

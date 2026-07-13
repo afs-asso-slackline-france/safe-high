@@ -207,6 +207,8 @@ class Model
 			} catch (Exception $e) {
 				return "Erreur : " . $e->getMessage();
 			}
+		} else {
+			return "Nothing to do";
 		}
 		
 	}
