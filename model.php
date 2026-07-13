@@ -48,11 +48,7 @@ class Model
 		$pdo = new PDO(
 			"mysql:host=localhost;dbname=safe_high;charset=utf8mb4",
 			"root",
-			"",
-			[
-				PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-				PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-			]
+			""
 		);
 		
 		return $pdo;
@@ -185,28 +181,32 @@ class Model
 		$roleManager->log_as_admin_or_not();
 		session_write_close();
 		
-		try {
-			$pdo = self::pdo_connect();
-			
-			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$sql = "DELETE FROM zone WHERE coords = :coords";
+		$pdo = self::pdo_connect();
+		
+		$zone = self::get_zone_from_coords($pdo, $coords);
 
-			$stmt = $pdo->prepare($sql);
-			$stmt->execute([
-				'coords' => $coords
-			]);
+		if (!empty($zone)) {
+			try {
+				$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				$sql = "DELETE FROM zone WHERE coords = :coords";
 
-			if(!$stmt->rowCount()) 
-			{
-				return "Deletion failed";
-			} else {
-				return "Deletion ok";
+				$stmt = $pdo->prepare($sql);
+				$stmt->execute([
+					'coords' => $coords
+				]);
+
+				if(!$stmt->rowCount()) 
+				{
+					return "Deletion failed";
+				} else {
+					return "Deletion ok";
+				}
 			}
-		}
-		catch (PDOException $e) {
-			return "Erreur PDO : " . $e->getMessage();
-		} catch (Exception $e) {
-			return "Erreur : " . $e->getMessage();
+			catch (PDOException $e) {
+				return "Erreur PDO : " . $e->getMessage();
+			} catch (Exception $e) {
+				return "Erreur : " . $e->getMessage();
+			}
 		}
 		
 	}
