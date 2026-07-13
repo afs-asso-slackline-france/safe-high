@@ -101,7 +101,7 @@ class Controller
 			"features" => $features
 		];
 
-		$client = new SafeSkyClient("sk_test_2bfa43bb2c2a285918d8c63d1c5100bf781ff856aa7a47e7");
+		$client = new SafeSkyClient("sk_test_d91ff7b253c28f7ca3d5b3dce512f6fa666461be0aced356");
 		$response = $client->sendAdvisory($safeSkyAdvisory);
 		var_dump($response);
 	}

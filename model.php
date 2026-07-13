@@ -1,61 +1,45 @@
 <?php 
-/*** Sql tables deploy
+/*** 
 
-CREATE TABLE `zone` (
-  `id` int(11) NOT NULL,
-  `label` varchar(300) NOT NULL,
-  `description` text NOT NULL,
-  `max_altitude` int(11) NOT NULL,
-  `start_date` datetime NOT NULL,
-  `end_date` datetime NOT NULL,
-  `coords` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`coords`)),
-  `statut` varchar(300) NOT NULL,
-  `user_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-***/
+-- bdd deploye --
+CREATE DATABASE safe_high;
+USE safe_high;
 
-/**
 
---
--- Structure de la table `users`
---
+--- Sql tables deploy ---
 
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `login` varchar(300) NOT NULL,
-  `password` varchar(300) NOT NULL,
-  `role` varchar(300) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE zone (
+    id INT NOT NULL AUTO_INCREMENT,
+    label VARCHAR(300) NULL,
+    description TEXT NULL,
+    max_altitude INT NOT NULL,
+    start_date DATETIME NOT NULL,
+    end_date DATETIME NOT NULL,
+    coords VARCHAR(2000) NOT NULL UNIQUE,
+    statut VARCHAR(300) NOT NULL,
+    user_id INT NOT NULL,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB;
 
---
--- Index pour les tables déchargées
---
 
---
--- Index pour la table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `login` (`login`);
+CREATE TABLE users (
+    id INT NOT NULL AUTO_INCREMENT,
+    login VARCHAR(300) NOT NULL UNIQUE,
+    password VARCHAR(300) NOT NULL,
+    role VARCHAR(300) NOT NULL,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB;
 
---
--- AUTO_INCREMENT pour les tables déchargées
---
 
---
--- AUTO_INCREMENT pour la table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-COMMIT;
-**/
-
-/**
 CREATE TABLE workers (
     id INT PRIMARY KEY,
     running TINYINT(1) NOT NULL,
     last_run DATETIME NULL
 );
+
+--- GENERATE DATA TO START ---
+INSERT INTO `users` (`id`, `login`, `password`, `role`) VALUES (NULL, 'admin', 'af57fddf963baad6a0b2dfe79b383401', 'admin');
+INSERT INTO `workers` (`id`, `running`, `last_run`) VALUES (1, '0', '');
 **/
 
 class Model
@@ -64,7 +48,11 @@ class Model
 		$pdo = new PDO(
 			"mysql:host=localhost;dbname=safe_high;charset=utf8mb4",
 			"root",
-			""
+			"",
+			[
+				PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+				PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+			]
 		);
 		
 		return $pdo;

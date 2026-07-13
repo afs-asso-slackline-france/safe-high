@@ -84,39 +84,56 @@ function stream_all($pdo) {
 	} catch (Throwable $e) {
 		$error = true;
 		echo $e;
-		foreach ($zones as $z) {
-			(new Model())->update_status(
-				$pdo,
-				$z["id"],
-				"!! STREAM ERROR !! (" . date('d/m/y H:i') . ")"
-			);
+		try {
+			$pdo->beginTransaction();
+			foreach ($zones as $z) {
+				(new Model())->update_status(
+					$pdo,
+					$z["id"],
+					"!! STREAM ERROR !! (" . date('d/m/y H:i') . ")"
+				);
+			}
+			$pdo->commit();
+		} catch (PDOException $e) {
+			$pdo->rollBack();
+			throw $e;
 		}
 	}
 	
 	if ($error == false) {
-		foreach ($zones as $z) {
-			// La zone est dans l'interval de début et de fin.
-			if ((new DateTime($z["start_date"]) <= new DateTime()) && (new DateTime($z["end_date"]) >= new DateTime())) {
-				(new Model())->update_status(
-					$pdo,
-					$z["id"],
-					"Streaming at (" . date('d/m/y H:i') . ")"
-				);
-			} elseif (new DateTime($z["start_date"]) > new DateTime()) {
-				(new Model())->update_status(
-					$pdo,
-					$z["id"],
-					"Waiting Start Date"
-				);
-				
-			} elseif (new DateTime($z["end_date"]) < new DateTime()) {
-				(new Model())->update_status(
-					$pdo,
-					$z["id"],
-					"XXX THE STREAM IS OVER XXX"
-				);
-				
+		try {
+			$pdo->beginTransaction();
+			foreach ($zones as $z) {
+				// La zone est dans l'interval de début et de fin.
+				if ((new DateTime($z["start_date"]) <= new DateTime()) && (new DateTime($z["end_date"]) >= new DateTime())) {
+					(new Model())->update_status(
+						$pdo,
+						$z["id"],
+						"Streaming at (" . date('d/m/y H:i') . ")"
+					);
+				} elseif (new DateTime($z["start_date"]) > new DateTime()) {
+					(new Model())->update_status(
+						$pdo,
+						$z["id"],
+						"Waiting Start Date"
+					);
+					
+				} elseif (new DateTime($z["end_date"]) < new DateTime()) {
+					(new Model())->update_status(
+						$pdo,
+						$z["id"],
+						"XXX THE STREAM IS OVER XXX"
+					);
+					
+				}
 			}
+			
+		   $pdo->commit();
+
+		} catch (PDOException $e) {
+
+			$pdo->rollBack();
+			throw $e;
 		}
 	}
 
