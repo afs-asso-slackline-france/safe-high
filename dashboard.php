@@ -95,7 +95,7 @@
 					</tr>
 					<tr>
 						<td> 
-							Please check the exact Max Altitude on <a href="https://www.geoportail.gouv.fr/carte">Geoportail</a> or other profesionnal map systeme and fill it here in FT/SEALEVEL.
+							Please check the exact Max Altitude on <a href="https://www.geoportail.gouv.fr/carte">Geoportail</a> or other profesionnal map systeme and fill it here in Meters (AMSL).
 						</td>
 						<td>
 							<input type="number" id="max_altitude" name="max_altitude" min="5" max="8000" required />
