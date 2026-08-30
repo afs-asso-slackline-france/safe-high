@@ -36,6 +36,8 @@ if (PHP_OS_FAMILY === 'Windows') {
 
 } else {
 	$php = '/usr/bin/php';
+	
+	$sessionId = session_id();
 
     exec(
         escapeshellarg($php) . ' ' .
