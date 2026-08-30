@@ -241,7 +241,7 @@ document.getElementById("zone_list").addEventListener("click", function (e) {
 
 async function sup_specific_zone(coords) {
 	
-	const response = await fetch("http://localhost/routing.php?route=delete_specific_zone", {
+	const response = await fetch("routing.php?route=delete_specific_zone", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
@@ -360,7 +360,7 @@ function add_zone_in_list() {
 }
 
 async function chargerZones() {
-		const response = await fetch("http://localhost/routing.php?route=get_zones_for_specific_user", {
+		const response = await fetch("routing.php?route=get_zones_for_specific_user", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
@@ -389,7 +389,7 @@ function add_status_div_area(coords) {
 				
 				parent.innerHTML = parent.innerHTML 
 				+ "<div class='status' id='status_"+coords+"' data-coords='"+coords+"'>"
-				+ "<img class='status_img' style='width: 19px;padding-bottom: 3px;margin-right: 2px;' src='http://localhost/img/anim_orange.gif'>" 
+				+ "<img class='status_img' style='width: 19px;padding-bottom: 3px;margin-right: 2px;' src='img/anim_orange.gif'>" 
 				+ "<span class ='blink status_message' style='font-weight: bold;'></span>";
 				+ "</div>"
 }
@@ -399,7 +399,7 @@ const form = document.querySelector("#declare_form");
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const response = await fetch("http://localhost/routing.php?route=declare_zone", {
+    const response = await fetch("routing.php?route=declare_zone", {
         method: "POST",
         body: new FormData(form)
     });
@@ -415,7 +415,7 @@ form.addEventListener("submit", async (e) => {
 		
 		parent.innerHTML = parent.innerHTML 
 		+ "<div class='status' id='status_"+form.coords.value+"' data-coords='"+form.coords.value+"'>"
-		+ "<img style='width: 19px;padding-bottom: 3px;margin-right: 2px;' src='http://localhost/img/anim_orange.gif'>" 
+		+ "<img style='width: 19px;padding-bottom: 3px;margin-right: 2px;' src='img/anim_orange.gif'>" 
 		+ "<span class ='blink status_message' style='font-weight: bold;'>Declared & before start date.</span>";
 		+ "</div>";*/
 		
