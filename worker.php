@@ -12,17 +12,18 @@ require_once "controller.php";
 require_once "model.php";
 $pdo = (new Model())->pdo_connect();
 
+session_start();
+
+if (isset($argv[1])) {
+    $_SESSION["current_user_id"] = $argv[1];//session_id($argv[1]);
+}
+
+require_once "role_manager.php";
+$roleManager = new roleManager();
+$roleManager->log_as_admin_or_not();
+session_write_close();
 
 //A mettre en commentaire en cas de cron//
-/**/if (isset($argv[1])) {
-/**/    session_id($argv[1]);
-/**/}
-/**/session_start();
-/**/require_once "role_manager.php";
-/**/$roleManager = new roleManager();
-/**/$roleManager->log_as_admin_or_not();
-/**/session_write_close();
-
 /**/while (true) {
 //FIN A mettre en commentaire en cas de cron FIN//
     $stmt = $pdo->query("SELECT running FROM workers WHERE id = 1");
@@ -37,7 +38,7 @@ $pdo = (new Model())->pdo_connect();
     $pdo->exec("UPDATE workers SET last_run = NOW() WHERE id = 1");
 	
 	echo "Did loop at ".date('d/m/y H:i');
-    sleep(60);
+    /**/sleep(60);
 	
 //A mettre en commentaire en cas de cron//
 /**/}
