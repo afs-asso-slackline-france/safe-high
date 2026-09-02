@@ -32,9 +32,9 @@ function start() {
 				document.getElementById("status_" + coords).querySelector(".status_message").innerHTML = statut;
 
 				if (statut.substring(0, 6) == "Stream") {
-					document.getElementById("status_" + coords).querySelector(".status_img").src = "http://localhost/img/anim_vert.gif";
+					document.getElementById("status_" + coords).querySelector(".status_img").src = prefix + "img/anim_vert.gif";
 				} else if (statut.substring(0, 3) == "XXX") {
-					document.getElementById("status_" + coords).querySelector(".status_img").src = "http://localhost/img/finish.png";
+					document.getElementById("status_" + coords).querySelector(".status_img").src = prefix + "img/finish.png";
 					const message = document.getElementById("status_" + coords)?.querySelector(".status_message");
 					message?.classList.remove("blink");
 				}
