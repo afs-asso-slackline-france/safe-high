@@ -23,6 +23,9 @@ $pdo->exec("
     WHERE id = 1
 ");
 
+/****************************************/
+/** COMMENT THIS PART IF YOU USE CRON **/
+/****************************************/
 $worker = __DIR__ . DIRECTORY_SEPARATOR . 'worker.php';
 
 if (PHP_OS_FAMILY === 'Windows') {
@@ -46,5 +49,8 @@ if (PHP_OS_FAMILY === 'Windows') {
         ' > /dev/null 2>&1 &'
     );
 }
+/****************************************/
+/*************END************************/
+/****************************************/
 
 echo "Worker démarré.";

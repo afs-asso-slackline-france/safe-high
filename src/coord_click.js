@@ -20,6 +20,14 @@ import XYZ from 'ol/source/XYZ.js';
 
 const source = new VectorSource();
 
+//Set depending environement "dev" or "prod"
+const mode = "prod";
+var prefix = "";
+if (mode == "dev") {
+	prefix = "http://localhost/";
+} 
+
+
 var currentDots = [];
 var allZones = [];
 window.allZones = allZones;
@@ -302,7 +310,7 @@ document.getElementById("zone_list").addEventListener("click", function (e) {
 
 async function sup_specific_zone(coords) {
 	
-	const response = await fetch("routing.php?route=delete_specific_zone", {
+	const response = await fetch(prefix + "routing.php?route=delete_specific_zone", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
@@ -424,7 +432,7 @@ function add_zone_in_list() {
 }
 
 async function chargerZones() {
-		const response = await fetch("routing.php?route=get_zones_for_specific_user", {
+		const response = await fetch(prefix + "routing.php?route=get_zones_for_specific_user", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
@@ -476,7 +484,7 @@ const form = document.querySelector("#declare_form");
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const response = await fetch("routing.php?route=declare_zone", {
+    const response = await fetch(prefix + "routing.php?route=declare_zone", {
         method: "POST",
         body: new FormData(form)
     });

@@ -1,3 +1,11 @@
+//Set depending environement "dev" or "prod"
+const mode = "dev";
+
+var prefix = "";
+if (mode == "dev") {
+	prefix = "http://localhost/";
+} 
+
 function start() {
     setInterval(async () => {
 		if (!document.querySelectorAll(".status").length == 0) {
@@ -5,7 +13,7 @@ function start() {
 				.map(item => item.dataset.coords);
 
 			const response = await fetch(
-				"http://localhost/routing.php?route=get_status",
+				prefix + "routing.php?route=get_status",
 				{
 					method: "POST",
 					headers: {
